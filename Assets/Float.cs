@@ -17,6 +17,7 @@ public class Float : MonoBehaviour
     /**
      * Awake
      */
+
     void Awake()
     {
         origPos = transform.position;
@@ -32,12 +33,10 @@ public class Float : MonoBehaviour
         if (animPos)
         {
             Vector3 pos;
-            pos.x = origPos.x + posAmplitude * Mathf.Sin(posSpeed * Time.time + startAnimOffset);
-            pos.y = origPos.y + posAmplitude * Mathf.Sin(posSpeed * Time.time + startAnimOffset);
-            pos.z = origPos.z + posAmplitude * Mathf.Sin(posSpeed * Time.time + startAnimOffset);
+            pos.x = origPos.x + posSpeed * posAmplitude * Mathf.Sin( Time.time + startAnimOffset)/5.0f;
+            pos.y = origPos.y + posSpeed * posAmplitude * Mathf.Sin(Time.time + startAnimOffset)/5.0f;
+            pos.z = origPos.z + posSpeed * posAmplitude * Mathf.Sin(Time.time + startAnimOffset)/5.0f;
             transform.position = pos;
-            posSpeed = Random.Range(1, 5);
-            posAmplitude = Random.Range(1, 5);
         }
 
     }
