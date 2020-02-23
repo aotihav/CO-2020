@@ -6,32 +6,13 @@ using System;
 
 public class Forming : State<Node>
 {
-    private static Forming _instance;
+
 
     public int dir;
     Vector3 randomPos;
 
     bool centered;
-    private Forming()
-    {
-        if (_instance != null)
-        {
-            return;
-        }
-
-        _instance = this;
-    }
-
-    public static Forming Instance
-    {
-        get
-        {
-            if (_instance == null)
-                new Forming();
-
-            return _instance;
-        }
-    }
+   
 
     public override void enterState(Node _node)
     {
@@ -52,12 +33,12 @@ public class Forming : State<Node>
     {
         if (!_node.forming)
         {
-            _node.stateMachine.changeState(Rest.Instance);
+            _node.stateMachine.changeState(new Rest());
         }
 
         if(centered)
         {
-            _node.stateMachine.changeState(Connected.Instance);
+            _node.stateMachine.changeState(new Connected());
         }
 
         _node.rb.AddForce(_node.Seek(new Vector3(0,0,0), 1.5f));
@@ -66,7 +47,7 @@ public class Forming : State<Node>
 
     private void CheckPosition(Node _node)
     {
-        if (Vector3.Distance(_node.transform.position, new Vector3(0, 0, 0)) < 0.2f)
+        if (Vector3.Distance(_node.transform.position, new Vector3(0, 0, 0)) < 0.5f)
         {
             centered = true;
         }

@@ -5,32 +5,10 @@ using StateMachineCode;
 
 public class Rest : State<Node> 
 {
-    private static Rest _instance;
-
     public int dir;
     Vector3 randomPos;
 
     bool waiting; 
-    private Rest()
-    {
-        if(_instance != null)
-        {
-            return;
-        }
-
-        _instance = this;
-    }
-
-    public static Rest Instance
-    {
-        get
-        {
-            if (_instance == null)
-                new Rest();
-
-            return _instance;
-        }
-    }
 
     public override void enterState(Node _node)
     {
@@ -50,7 +28,7 @@ public class Rest : State<Node>
     {
         if (_node.forming)
         {
-            _node.stateMachine.changeState(Forming.Instance);
+            _node.stateMachine.changeState(new Forming());
         }
 
         if (waiting == false)

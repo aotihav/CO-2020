@@ -18,6 +18,8 @@ public class Node : MonoBehaviour
 
     public Rigidbody rb;
 
+    public Node connectedNode;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -33,7 +35,7 @@ public class Node : MonoBehaviour
 
 
         stateMachine = new StateMachine<Node>(this);
-        stateMachine.changeState(Rest.Instance);
+        stateMachine.changeState(new Rest());
     }
 
     // Update is called once per frame

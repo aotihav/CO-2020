@@ -4,31 +4,10 @@ using UnityEngine;
 using StateMachineCode;
 public class Separating : State<Node>
 {
-    private static Separating _instance;
 
     public float gametime;
     public int seconds = 0;
 
-    private Separating()
-    {
-        if (_instance != null)
-        {
-            return;
-        }
-
-        _instance = this;
-    }
-
-    public static Separating Instance
-    {
-        get
-        {
-            if (_instance == null)
-                new Separating();
-
-            return _instance;
-        }
-    }
 
     public override void enterState(Node _node)
     {
@@ -47,7 +26,7 @@ public class Separating : State<Node>
     {
         if (_node.forming)
         {
-            _node.stateMachine.changeState(Forming.Instance);
+            _node.stateMachine.changeState(new Forming());
         }
 
         if(Time.time > gametime + 1)
@@ -59,7 +38,7 @@ public class Separating : State<Node>
 
         if(seconds == 2)
         {
-            _node.stateMachine.changeState(Rest.Instance);
+            _node.stateMachine.changeState(new Rest());
         }
     }
 }
