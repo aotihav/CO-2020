@@ -1,34 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
+using System;
 
 public class NodeManager : MonoBehaviour
 {
-    public GameObject[] nodeTargets;
-    public GameObject[] nodes;
+    public static NodeManager current;
 
+    public GameObject[] nodes;
+    public GameObject[] activeNodes;
+    
     public GameObject nodePF;
 
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        nodeTargets = GameObject.FindGameObjectsWithTag("movementTarget");
-        StartCoroutine(createNode());
+        current = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public event Action OnActivateNode;
+    public void ActivateNode()
     {
-
-    }
-
-    public IEnumerator createNode()
-    {
-        for(int i = 0; i < 4; i++)
+        if(OnActivateNode != null)
         {
-            yield return new WaitForSeconds(3f);
-            Instantiate(nodePF, new Vector3(0, 0, 0), Quaternion.identity);
+            OnActivateNode.Invoke();
         }
+    }
+    public void DectivateNode()
+    {
+
     }
 }

@@ -2,33 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using StateMachineCode;
-
-public class Rest : State<Node> 
+public class Searching : State<Node>
 {
     public int dir;
     Vector3 randomPos;
 
-    bool waiting; 
+    bool waiting;
 
     public override void enterState(Node _node)
     {
-        _node.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+        _node.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
         waiting = false;
         dir = 1;
-        Debug.Log("Entering Rest state");
+        Debug.Log("Entering Searching state");
     }
 
     public override void exitState(Node _node)
     {
         _node.StopAllCoroutines();
-        Debug.Log("Exiting Rest state");
+        Debug.Log("Exiting Searching state");
     }
 
     public override void updateState(Node _node)
     {
-        if (_node.searching)
+        if (_node.connectedNode != null)
         {
-            _node.stateMachine.changeState(new Searching());
+            _node.stateMachine.changeState(new Forming());
         }
         if (waiting == false)
         {

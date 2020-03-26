@@ -6,13 +6,10 @@ using System;
 
 public class Forming : State<Node>
 {
-
-
     public int dir;
     Vector3 randomPos;
 
     bool centered;
-   
 
     public override void enterState(Node _node)
     {
@@ -24,17 +21,12 @@ public class Forming : State<Node>
 
     public override void exitState(Node _node)
     {
-        _node.forming = false;
         _node.StopAllCoroutines();
         Debug.Log("Exiting Forming state");
     }
 
     public override void updateState(Node _node)
     {
-        if (!_node.forming)
-        {
-            _node.stateMachine.changeState(new Rest());
-        }
 
         if(centered)
         {

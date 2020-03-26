@@ -11,7 +11,7 @@ public class Separating : State<Node>
 
     public override void enterState(Node _node)
     {
-        _node.rb.AddForce(new Vector3(Random.Range(500, 1000), Random.Range(500, 1000), Random.Range(500, 1000)));
+        _node.rb.AddForce(new Vector3(Random.Range(-1000, 1000), Random.Range(-1000, 1000), 0.0f));
         _node.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         Debug.Log("Entering Separating state");
     }
@@ -24,10 +24,6 @@ public class Separating : State<Node>
 
     public override void updateState(Node _node)
     {
-        if (_node.forming)
-        {
-            _node.stateMachine.changeState(new Forming());
-        }
 
         if(Time.time > gametime + 1)
         {

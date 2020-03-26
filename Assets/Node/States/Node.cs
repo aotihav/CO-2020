@@ -6,7 +6,9 @@ using StateMachineCode;
 
 public class Node : MonoBehaviour
 {
-    public bool forming;
+    public string name;
+
+    public bool searching;
     public bool connected;
 
     public float gameTimer;
@@ -19,6 +21,8 @@ public class Node : MonoBehaviour
     public Rigidbody rb;
 
     public Node connectedNode;
+
+    public KeyCode OnKey; //test variable that is a place holder for the arduino controllers
 
     // Start is called before the first frame update
     private void Start()
@@ -35,7 +39,7 @@ public class Node : MonoBehaviour
 
 
         stateMachine = new StateMachine<Node>(this);
-        stateMachine.changeState(new Rest());
+        stateMachine.changeState(new Spawning());
     }
 
     // Update is called once per frame
@@ -53,5 +57,15 @@ public class Node : MonoBehaviour
 
         Vector3 steerForce = desiredVelocity;
         return steerForce;
+    }
+
+    public void ActivateNode()
+    {
+
+    }
+
+    public void DeactivateNode()
+    {
+
     }
 }
