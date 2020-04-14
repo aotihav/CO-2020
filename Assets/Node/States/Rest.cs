@@ -36,7 +36,7 @@ public class Rest : State<Node>
         }
         else
         {
-            _node.rb.AddForce(_node.Seek(randomPos, 0.5f));
+            _node.rb.AddForce(_node.Seek(randomPos, 2.5f));
         }
     }
 
