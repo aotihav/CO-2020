@@ -6,7 +6,7 @@ using StateMachineCode;
 
 public class Node : MonoBehaviour
 {
-    public string name;
+    public int id;
 
     public bool searching;
     public bool connected;
@@ -15,31 +15,26 @@ public class Node : MonoBehaviour
     public int seconds = 0;
     public StateMachine<Node> stateMachine { get; set; }
 
-    public List<Vector2> positions;
-    public int posIndex;
-
     public Rigidbody rb;
 
     public Node connectedNode;
+    public Node Neighbor; //References the node associated with the other hand
+
+    public NodeManager nodeManager;
 
     public KeyCode OnKey; //test variable that is a place holder for the arduino controllers
 
     // Start is called before the first frame update
     private void Start()
     {
-       
-
         gameTimer = Time.time;
 
         rb = this.GetComponent<Rigidbody>();
 
-        List<GameObject> targets = GameObject.FindGameObjectsWithTag("movementTarget").ToList();
-        positions = targets.Select(x => new Vector2(x.transform.position.x, x.transform.position.y)).OrderBy((a) => Mathf.Atan2(a.y, a.x)).ToList();
-        posIndex = Random.Range(0, positions.Count);
-
-
         stateMachine = new StateMachine<Node>(this);
-        stateMachine.changeState(new Spawning());
+        stateMachine.changeState(new Rest());
+
+        nodeManager = GameObject.FindObjectOfType<NodeManager>();
     }
 
     // Update is called once per frame
@@ -61,11 +56,14 @@ public class Node : MonoBehaviour
 
     public void ActivateNode()
     {
-
+        stateMachine.changeState(new Searching());
     }
 
     public void DeactivateNode()
     {
-
+        if (connected)
+            stateMachine.changeState(new Separating());
+        else
+            stateMachine.changeState(new Rest());
     }
 }

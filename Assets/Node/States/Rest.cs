@@ -26,10 +26,6 @@ public class Rest : State<Node>
 
     public override void updateState(Node _node)
     {
-        if (_node.searching)
-        {
-            _node.stateMachine.changeState(new Searching());
-        }
         if (waiting == false)
         {
             _node.StartCoroutine(GetNextPosition(_node));
@@ -42,19 +38,7 @@ public class Rest : State<Node>
 
     IEnumerator GetNextPosition(Node _node)
     {
-        _node.posIndex += 1 * dir;
-
-        if (_node.posIndex >= _node.positions.Count)
-        {
-            _node.posIndex %= _node.positions.Count;
-        }
-
-        if (_node.posIndex < 0)
-        {
-            _node.posIndex = _node.positions.Count + _node.posIndex;
-        }
-
-        randomPos = new Vector3(_node.positions[_node.posIndex].x, _node.positions[_node.posIndex].y) + (new Vector3(Random.Range(0.2f, -0.2f), Random.Range(0.2f, -0.2f), Random.Range(1, -1)));
+        _node.nodeManager.getRandomPosition();
 
         waiting = true;
         yield return new WaitForSeconds(3f);

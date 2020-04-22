@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Collections.Generic;
 using System;
 
 public class NodeManager : MonoBehaviour
@@ -13,10 +12,12 @@ public class NodeManager : MonoBehaviour
     public GameObject[] activeNodes;
     
     public GameObject nodePF;
-
+    public List<Vector2> positions;
 
     private void Awake()
     {
+        List<GameObject> targets = GameObject.FindGameObjectsWithTag("movementTarget").ToList();
+        positions = targets.Select(x => new Vector2(x.transform.position.x, x.transform.position.y)).ToList();
         current = this;
     }
 
@@ -31,5 +32,10 @@ public class NodeManager : MonoBehaviour
     public void DectivateNode()
     {
 
+    }
+
+    public Vector2 getRandomPosition()
+    {
+        return positions[UnityEngine.Random.Range(0, positions.Count())];
     }
 }
